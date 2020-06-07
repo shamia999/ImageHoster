@@ -13,6 +13,11 @@
         <a href="users/login.html" th:href="@{/users/login}">Login</a>
         <a href="users/registration.html" th:href="@{/users/registration}">Registration</a>
     </header>
+
+</header>
+
+<header th:fragment="msg" th:remove="tag">
+<b> only the owner of image can edit/delete the image</b>
 </header>
 
 <!-- Define a logged-in fragment-->

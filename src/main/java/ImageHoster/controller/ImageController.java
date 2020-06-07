@@ -99,16 +99,27 @@ public class ImageController {
 
     //The method first needs to convert the list of all the tags to a string containing all the tags separated by a comma and then add this string in a Model type object
     //This string is then displayed by 'edit.html' file as previous tags of an image
-    @RequestMapping(value = "/editImage")
-    public String editImage(@RequestParam("imageId") Integer imageId, Model model) {
+    @RequestMapping(value ="/editImage",method=RequestMethod.GET)
+    public String editImage(@RequestParam("imageId") Integer imageId, Model model,HttpSession session) {
+
+        User loggedUser = (User) session.getAttribute("loggeduser");
+
         Image image = imageService.getImage(imageId);
 
-        String tags = convertTagsToString(image.getTags());
-        model.addAttribute("image", image);
-        model.addAttribute("tags", tags);
-        return "images/edit";
-    }
+        if (loggedUser.getId().equals(image.getUser().getId())) {
+            String tags = convertTagsToString(image.getTags());
+            model.addAttribute("image", image);
+            model.addAttribute("tags", tags);
+            return "images/edit";
+        }
+        else
+        {
+            model.addAttribute("image",image);
+            model.addAttribute("editError","only the owner of image can edit the image");
 
+            return "images/image";
+        }
+    }
     //This controller method is called when the request pattern is of type 'images/edit' and also the incoming request is of PUT type
     //The method receives the imageFile, imageId, updated image, along with the Http Session
     //The method adds the new imageFile to the updated image if user updates the imageFile and adds the previous imageFile to the new updated image if user does not choose to update the imageFile
@@ -148,11 +159,23 @@ public class ImageController {
     //The method calls the deleteImage() method in the business logic passing the id of the image to be deleted
     //Looks for a controller method with request mapping of type '/images'
     @RequestMapping(value = "/deleteImage", method = RequestMethod.DELETE)
-    public String deleteImageSubmit(@RequestParam(name = "imageId") Integer imageId) {
-        imageService.deleteImage(imageId);
-        return "redirect:/images";
-    }
+    public String deleteImageSubmit(@RequestParam(name = "imageId") Integer imageId,HttpSession session,Model m) {
+        User u = (User) session.getAttribute("loggeduser");
+        Image I = imageService.getImage(imageId);
+        if (u.getId().equals(I.getUser().getId())) {
 
+            imageService.deleteImage(imageId);
+            return "redirect:/images";
+        }
+
+        else
+            {
+                m.addAttribute("image",I);
+                m.addAttribute("deleteError","Only the owner of the image can delete the image");
+
+                return "images/image";
+        }
+    }
 
     //This method converts the image to Base64 format
     private String convertUploadedFileToBase64(MultipartFile file) throws IOException {
