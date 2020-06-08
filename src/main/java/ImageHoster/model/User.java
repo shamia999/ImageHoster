@@ -40,8 +40,10 @@ public class User {
     //FetchType is LAZY
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Image> images = new ArrayList<>();
+     @OneToMany(mappedBy = "user",cascade=CascadeType.REMOVE,fetch =FetchType.LAZY)
+      List<Comments>comments=new ArrayList<>();
 
-    public Integer getId() {
+public Integer getId() {
         return id;
     }
 
@@ -80,5 +82,6 @@ public class User {
     public void setImages(List<Image> images) {
         this.images = images;
     }
+
 }
 

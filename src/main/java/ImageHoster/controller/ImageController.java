@@ -1,10 +1,12 @@
 package ImageHoster.controller;
 
+import ImageHoster.model.Comments;
 import ImageHoster.model.Image;
 import ImageHoster.model.Tag;
 import ImageHoster.model.User;
 import ImageHoster.service.ImageService;
 import ImageHoster.service.TagService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,10 +47,11 @@ public class ImageController {
     //Also now you need to add the tags of an image in the Model type object
     //Here a list of tags is added in the Model type object
     //this list is then sent to 'images/image.html' file and the tags are displayed
-    /*@RequestMapping("/images/{id}/{title}")
+    /*@RequestMapping("/images/{title}")
     public String showImage(@PathVariable("title") String title, Model model) {
         Image image = imageService.getImageByTitle(title);
         model.addAttribute("image", image);
+        model.addAttribute("comments",image.getCom());
         model.addAttribute("tags", image.getTags());
         return "images/image";
     } */
@@ -58,9 +61,18 @@ public class ImageController {
         Image image = imageService.getImage(id);
         model.addAttribute("image", image);
         model.addAttribute("tags", image.getTags());
+        model.addAttribute("comments",image.getCom());
         return "images/image";
     }
-
+@RequestMapping("/images/{id}/{title}/comments")
+public String showImagee(@PathVariable("id")Integer id, @PathVariable("title")String title, @RequestParam("comments")String comments, Model m)
+{
+    Image image = imageService.getImage(id);
+    m.addAttribute("image", image);
+    m.addAttribute("tags",image.getTags());
+    m.addAttribute("comments",image.getCom());
+    return "images/image";
+}
     //This controller method is called when the request pattern is of type 'images/upload'
     //The method returns 'images/upload.html' file
     @RequestMapping("/images/upload")
@@ -78,6 +90,10 @@ public class ImageController {
     //Get the 'tags' request parameter using @RequestParam annotation which is just a string of all the tags
     //Store all the tags in the database and make a list of all the tags using the findOrCreateTags() method
     //set the tags attribute of the image as a list of all the tags returned by the findOrCreateTags() method
+//Comment Submit
+
+
+
     @RequestMapping(value = "/images/upload", method = RequestMethod.POST)
     public String createImage(@RequestParam("file") MultipartFile file, @RequestParam("tags") String tags, Image newImage, HttpSession session) throws IOException {
 
@@ -116,7 +132,7 @@ public class ImageController {
         {
             model.addAttribute("image",image);
             model.addAttribute("editError","only the owner of image can edit the image");
-
+            model.addAttribute("comments",image.getCom());
             return "images/image";
         }
     }
@@ -151,7 +167,7 @@ public class ImageController {
         updatedImage.setDate(new Date());
 
         imageService.updateImage(updatedImage);
-        return "redirect:/images/" + updatedImage.getTitle();
+        return "redirect:/images/" +updatedImage.getTitle();
     }
 
 
@@ -172,7 +188,7 @@ public class ImageController {
             {
                 m.addAttribute("image",I);
                 m.addAttribute("deleteError","Only the owner of the image can delete the image");
-
+                m.addAttribute("comments",I.getCom());
                 return "images/image";
         }
     }

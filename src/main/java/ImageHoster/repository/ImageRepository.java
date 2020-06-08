@@ -1,5 +1,6 @@
 package ImageHoster.repository;
 
+import ImageHoster.model.Comments;
 import ImageHoster.model.Image;
 import org.springframework.stereotype.Repository;
 
@@ -110,4 +111,7 @@ public class ImageRepository {
         }
     }
 
-}
+
+  }
+
+
