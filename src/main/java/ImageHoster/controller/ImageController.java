@@ -33,9 +33,12 @@ public class ImageController {
     @RequestMapping("images")
     public String getUserImages(Model model) {
         List<Image> images = imageService.getAllImages();
+
         model.addAttribute("images", images);
+
         return "images";
     }
+
 
     //This method is called when the details of the specific image with corresponding title are to be displayed
     //The logic is to get the image from the databse with corresponding title. After getting the image from the database the details are shown
@@ -64,6 +67,7 @@ public class ImageController {
         model.addAttribute("comments",image.getCom());
         return "images/image";
     }
+
 @RequestMapping("/images/{id}/{title}/comments")
 public String showImagee(@PathVariable("id")Integer id, @PathVariable("title")String title, @RequestParam("comments")String comments, Model m)
 {

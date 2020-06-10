@@ -1,5 +1,4 @@
 package ImageHoster.model;
-
 import javax.persistence.*;
 import java.util.Date;
 @Entity
@@ -18,17 +17,16 @@ public class Comments {
     private User user;
 @ManyToOne(fetch=FetchType.EAGER)
 @JoinColumn(name="image_id")
-
 private Image image;
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getText() {
+    public String getText()
+    {
         return text;
     }
 
