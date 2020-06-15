@@ -6,6 +6,7 @@ import ImageHoster.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.stream.events.Comment;
 import java.util.List;
 
 @Service
@@ -14,13 +15,15 @@ public class CommentService
 @Autowired
     CommentRepository cr;
 
-    public void submitComment(Comments comment)
+    public Comments submitComment(Comments comment)
+
 
     {
-         cr.submitComment(comment);
+       return cr.submitComment(comment);
+
     }
-    public List showComment(Image i)
+   /* public List showComment(Image i)
     {
        return cr.showComment(i);
-    }
+    } */
 }

@@ -12,7 +12,7 @@ public class CommentRepository {
     @PersistenceUnit(unitName ="imageHoster")
     private EntityManagerFactory emf;
 
-    public void submitComment(Comments c)
+    public Comments submitComment(Comments c)
     {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
@@ -26,14 +26,15 @@ public class CommentRepository {
         {
             et.rollback();
         }
+return c;
     }
-    public List <Comments>showComment(Image i)
+  /*  public List <Comments>showComment(Image i)
     {
      EntityManager em=emf.createEntityManager();
      //EntityTransaction et= em.getTransaction();
-      TypedQuery<Comments>t =em.createQuery("SELECT p from Comments p where p.image=:ImageId",Comments.class);
+      TypedQuery<Comments>t =em.createQuery("SELECT p from Comments p",Comments.class);
      List<Comments>comm = t.getResultList();
      return comm;
-    }
+    } */
 
     }

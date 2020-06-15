@@ -31,18 +31,15 @@ public class CommentsController {
          User currentUser=(User)session.getAttribute("loggedUser");
          Image I1=imageService.getImage(imageId);
          Comments com=new Comments();
-         com.setUser(currentUser);
-         com.setText(Comment1);
-         com.setDate(new Date());
          com.setImage(I1);
+         com.setText(Comment1);
+         com.setUser(currentUser);
+         com.setDate(new Date());
          cs.submitComment(com);
-           //model.addAttribute("comments",I1);
-          //model.addAttribute("comments",I1);
-       // return "redirect:/images/image";
-        return "redirect:/images/"+imageId+"/"+imageTitle;
+         return "redirect:/images/" +imageId+"/"+imageTitle;
     }
 
-    @RequestMapping(value="/image/{imageId}/{imageTitle}/comment",method=RequestMethod.GET)
+   /* @RequestMapping(value="/image/{imageId}/{imageTitle}/comment",method=RequestMethod.GET)
 
     public void showComment(@PathVariable("imageId")Integer ImageId,@PathVariable("imageTitle")String title,@RequestParam("comment")String com,Model M)
 
@@ -54,9 +51,9 @@ public class CommentsController {
           UserProfile up=new UserProfile();
           u.setProfile(up);
            Comments co=new Comments();
-           co.setUser(u); */
+           co.setUser(u);
       M.addAttribute("image",Image);
       M.addAttribute("comment",Mm);
-    }
+    } */
 }
 

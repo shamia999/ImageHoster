@@ -61,7 +61,7 @@ public class UserController {
     }
     public static boolean validation(String password)
     {
-        String regex="^(?=.*[0-9])" +"(?=.*[a-z])"+"(?=.*[A-Z])"+" (?=.*[!@#$%^&*()-+])";
+        String regex= " ^(?=.*[0-9])"+"(?=.*[a-z])"+"(?=.*[A-Z])"+" (?=.*[!@#$%^&*()-+])";
 
         //Compile the regex
        Pattern p= Pattern.compile(regex);

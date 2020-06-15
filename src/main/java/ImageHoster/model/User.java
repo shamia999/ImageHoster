@@ -40,7 +40,7 @@ public class User {
     //FetchType is LAZY
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Image>image = new ArrayList<>();
-     @OneToMany(mappedBy = "user",cascade=CascadeType.REMOVE,fetch =FetchType.LAZY)
+    @OneToMany(mappedBy = "user",cascade=CascadeType.REMOVE,fetch =FetchType.LAZY)
       List<Comments>comment=new ArrayList<>();
 
 public Integer getId() {

@@ -45,7 +45,8 @@ public class UserRepository {
             typedQuery.setParameter("password", password);
 
             return typedQuery.getSingleResult();
-        } catch (NoResultException nre) {
+        }
+        catch (NoResultException nre) {
             return null;
         }
     }
